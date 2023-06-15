@@ -5,8 +5,8 @@ export const createTrack = async (body: any) => {
   return data.data;
 };
 
-export const getAllTracks = async () => {
-  const data = await api.get("tracks");
+export const getAllTracks = async (keyword: string = "") => {
+  const data = await api.get(`tracks?keyword=${keyword}`);
   return data.data;
 };
 

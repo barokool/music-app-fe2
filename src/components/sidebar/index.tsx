@@ -42,7 +42,9 @@ export const Sidebar = ({
         </div>
 
         <div
-          onClick={() => (setIsSearch(!isSearch), setIsSidebar(false))}
+          onClick={() => (
+            setIsSearch(!isSearch), setIsSidebar(false), navigate("/search")
+          )}
           className="iniSearDivs"
         >
           <p>
