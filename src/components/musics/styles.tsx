@@ -8,7 +8,8 @@ export const Container = styled.div`
     padding: 5px 5px 25px;
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     height: fit-content;
     border-radius: 10px;
     color: #16171a;
@@ -18,6 +19,7 @@ export const Container = styled.div`
     margin: 0;
     width: 100%;
     border-radius: 8px;
+    height: 150px;
   }
 
   h1 {

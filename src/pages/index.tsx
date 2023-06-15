@@ -88,7 +88,7 @@ function AppIndex() {
           )}
         </Box>
       </Box>
-      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
+      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
         {(tracks?.data as any)?.map((music: { [key: string]: any }) => (
           <Musics
             key={music._id}

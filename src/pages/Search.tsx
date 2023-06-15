@@ -21,39 +21,51 @@ const Search = () => {
   console.log(data?.data);
 
   return (
-    <Container sx={{ mt: 5, width: "100%" }}>
-      <h1>search</h1>
-      <TextField
-        id="search"
-        type="search"
-        label="Search"
-        value={searchTerm}
-        onChange={handleChange}
-        sx={{ width: 600 }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <SearchIcon />
-            </InputAdornment>
-          ),
+    <div className="">
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "20px",
+          flexDirection: "column",
         }}
-      />
+      >
+        {/* <Container sx={{ mt: 5 }}> */}
+        <h1>Search</h1>
+        <TextField
+          id="search"
+          type="search"
+          label="Search"
+          value={searchTerm}
+          onChange={handleChange}
+          sx={{ width: 600 }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
 
-      <Box>
-        <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
-          {(data?.data as any)?.map((music: { [key: string]: any }) => (
-            <Musics
-              key={music._id}
-              img={music.coverImage}
-              name={music.title}
-              author={music.author.name}
-              audio={music.mp3File}
-              slug={music.slug}
-            />
-          ))}
+        <Box sx={{ marginTop: "50px" }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
+            {(data?.data as any)?.map((music: { [key: string]: any }) => (
+              <Musics
+                key={music._id}
+                img={music.coverImage}
+                name={music.title}
+                author={music.author.name}
+                audio={music.mp3File}
+                slug={music.slug}
+              />
+            ))}
+          </Box>
         </Box>
+        {/* </Container> */}
       </Box>
-    </Container>
+    </div>
   );
 };
 

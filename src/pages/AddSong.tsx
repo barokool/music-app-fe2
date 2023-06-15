@@ -145,7 +145,7 @@ const AddSong = () => {
         marginLeft: "100px",
       }}
     >
-      <Typography sx={{ textAlign: "center" }}>Add new song</Typography>
+      <h1>Add new song</h1>
 
       <Box sx={{ paddingTop: "50px" }}>
         <FormProvider {...formMethods}>

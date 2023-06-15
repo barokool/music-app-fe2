@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { deleteTrackToPlaylist, getPlaylists } from "../apis/playlist";
 import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
@@ -48,7 +48,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 const Playlists = () => {
-  const { data, error, isError, isLoading } = useQuery(
+  const { data, error, isError, isLoading, refetch } = useQuery(
     "playlists",
     getPlaylists
   );
@@ -70,6 +70,10 @@ const Playlists = () => {
     console.log(response);
     if (response) setSuccess(true);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [success]);
 
   return (
     <Box sx={{ width: "100%", padding: "20px" }}>

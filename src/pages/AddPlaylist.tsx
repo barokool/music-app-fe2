@@ -56,7 +56,7 @@ const AddPlaylist = () => {
         marginTop: "100px",
       }}
     >
-      <Typography sx={{ textAlign: "center" }}>Add Playlist</Typography>
+      <h1>Add Playlist</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box
           display="flex"
