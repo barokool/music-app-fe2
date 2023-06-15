@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { getPlaylists } from "../apis/playlist";
-import { Box, Button, Typography } from "@mui/material";
+import { deleteTrackToPlaylist, getPlaylists } from "../apis/playlist";
+import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
@@ -53,17 +53,23 @@ const Playlists = () => {
     getPlaylists
   );
 
-  const [expanded, setExpanded] = React.useState<string | false>(
+  const [expanded, setExpanded] = React.useState<string>(
     data?.data?.[0].id || ""
   );
   const [url, setUrl] = useState("");
+  const [success, setSuccess] = useState(false);
 
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-    };
+  const handleChange = (panel: string) => {
+    console.log("hihi");
+    setExpanded(panel ? panel : "");
+  };
 
-  const onRemoveSongOfPlaylist = () => {};
+  const onRemoveSongOfPlaylist = async (id: string, trackSlug: string) => {
+    const response = await deleteTrackToPlaylist(id, trackSlug);
+
+    console.log(response);
+    if (response) setSuccess(true);
+  };
 
   return (
     <Box sx={{ width: "100%", padding: "20px" }}>
@@ -83,8 +89,10 @@ const Playlists = () => {
           {data?.data?.map((playlist: any) => {
             return (
               <Accordion
+                key={playlist?.id}
                 expanded={expanded === playlist?.id}
                 onChange={() => {
+                  console.log("hihi");
                   handleChange(playlist?.id);
                 }}
               >
@@ -92,7 +100,10 @@ const Playlists = () => {
                   aria-controls="panel1d-content"
                   id="panel1d-header"
                 >
-                  <Typography> {playlist.name}</Typography>
+                  <Typography>
+                    {" "}
+                    {playlist.name} - {playlist.tracks.length} Tracks
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails
                   sx={{ display: "flex", flexDirection: "column", gap: "20px" }}
@@ -109,7 +120,13 @@ const Playlists = () => {
                         onClick={() => setUrl(track.mp3File)}
                       >
                         <Typography>Name song : {track?.title}</Typography>
-                        <Button variant="outlined" color="error">
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          onClick={() =>
+                            onRemoveSongOfPlaylist(playlist?.id, track?.slug)
+                          }
+                        >
                           Delete of playlist
                         </Button>
                       </Box>
@@ -124,6 +141,20 @@ const Playlists = () => {
       <Box sx={{ position: "fixed", bottom: 0 }}>
         <ReactAudioPlayer src={url} controls />
       </Box>
+
+      <Snackbar
+        open={success}
+        autoHideDuration={3000}
+        onClose={() => setSuccess(false)}
+      >
+        <Alert
+          onClose={() => setSuccess(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Delete track out of playlist success
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
